@@ -1,0 +1,32 @@
+/* Procedure untuk menampilkan jumlah komentar yang ada di ig surabaya */ 
+PEMBATASAN //
+PROSEDUR BUAT ATAU GANTI jumlah_komentar()
+MULAI
+SELECT SUM(comment_count) FROM tbl_scraping WHERE ig_username = "surabaya";
+AKHIR //
+PEMBATAS ;
+
+/*pemanggilan*/
+CALL jumlah_komentar();
+
+/* Fungsi untuk menampilkan followers tertinggi */
+PEMBATASAN //
+BUAT ATAU GANTI FUNGSI followers_tertinggi(flw INTEGER)
+MENGEMBALIKAN INTEGER
+MULAI
+PILIH MAX(pengikut_jumlah) KE flw DARI tbl_scraping;
+KEMBALI terbang;
+AKHIR;
+//
+
+/*pemanggilan*/
+PILIH ig_username, followers_tertinggi(follower_count) DARI tbl_scraping
+
+/* View untuk menampilkan postingan pada tahun 2022 */
+CREATE VIEW postingan_222 SEBAGAI
+PILIH ig_username, url, like_count, comment_count,take_at
+DARI tbl_scraping
+DIMANA TAHUN(diambil_at) = 2022
+
+/*pemanggilan*/
+SELECT * FROM postingan_2022 GROUP BY ig_username
